@@ -8,7 +8,7 @@ public class Main {
 
         Scanner scan = new Scanner(System.in);
 
-        LoginService loginService = new LoginService();
+        LoginService loginService = new LoginService(new Repository());
 
         Thread.sleep(3000);
 
@@ -18,10 +18,11 @@ public class Main {
 
         String tryAgain = "1";
         while (tryAgain.equals("1")) {
+
             tryAgain = "2";
             try {
                 loginService.userLoginOrRegistration();
-            } catch (UsernameTakenException | IncorrectUsernamePasswordException e) {
+            } catch (UsernameTakenException | IncorrectUsernamePasswordException | IncorrectPasswordRequirementsException e) {
                 System.out.println(e.getMessage());
                 System.out.print("Would you like to try again:\n" +
                         "1. Yes \n" +

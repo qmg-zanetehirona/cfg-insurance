@@ -7,7 +7,11 @@ public class LoginService {
 
     Scanner scan = new Scanner(System.in);
     Customer customer;
-    Repository repository = new Repository();
+    Repository repository;
+
+    public LoginService(Repository repository) {
+        this.repository = repository;
+    }
 
     private String UserChooseFunction() {
 
@@ -18,8 +22,8 @@ public class LoginService {
                 "Please enter a value: -> : ");
         return scan.next();
     }
-    private Customer runFunctionSelected(String option, String username, String originalPassword)
-            throws SQLException, IncorrectUsernamePasswordException, UsernameTakenException {
+    public Customer runFunctionSelected(String option, String username, String originalPassword)
+            throws SQLException, IncorrectUsernamePasswordException, UsernameTakenException, IncorrectPasswordRequirementsException {
 
         if (option.equals("1")) {
             customer = repository.logInExistingCustomer(username, originalPassword);
