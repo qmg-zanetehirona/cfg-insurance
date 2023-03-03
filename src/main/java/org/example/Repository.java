@@ -2,11 +2,10 @@ package org.example;
 
 import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
-import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Repository {
-    Scanner scan = new Scanner(System.in);
+
     private Connection connect;
 
     public Repository() {
@@ -22,17 +21,17 @@ public class Repository {
         }
     }
 
-    public Customer createCustomer(String username, String password) throws SQLException, UsernameTakenException {
+    public Customer createCustomer(String username, String password) throws SQLException, UsernameTakenException, IncorrectPasswordRequirementsException {
         ResultSet resultSet = connect.createStatement()
                 .executeQuery(String.format(" SELECT * FROM usersregistration WHERE user_username ='%s'", username));
         if (resultSet.next()) {
             throw new UsernameTakenException("Username is taken");
-        } else {
-            String passwordValid = isPasswordValid(password);
-            connect.createStatement().executeUpdate(
-                    String.format(" INSERT INTO usersregistration (user_username,user_password) VALUES ('%s','%s')", username, passwordValid));
-            return new Customer(username);
         }
+        String passwordValid = passwordValid(password);
+        String crypt = cryptPassword(passwordValid);
+        connect.createStatement().executeUpdate(
+                String.format(" INSERT INTO usersregistration (user_username,user_password) VALUES ('%s','%s')", username, crypt));
+        return new Customer(username);
     }
 
     public Customer logInExistingCustomer(String username, String originalPassword) throws SQLException, IncorrectUsernamePasswordException {
@@ -47,30 +46,19 @@ public class Repository {
         throw new IncorrectUsernamePasswordException("Incorrect username or password");
     }
 
-    private String isPasswordValid(String originalPassword) {
+    public String passwordValid(String originalPassword) throws IncorrectPasswordRequirementsException {
         boolean isValid = passwordValidator(originalPassword);
-        while (!isValid) {
-            System.out.println("Password does not meet the requirements.");
-            System.out.print("Please make sure that the password contains:\n" +
-                    "*  At least 8 characters.\n" +
-                    "*  At least two digit.\n" +
-                    "*  At least one upper case alphabet.\n" +
-                    "*  At least one special character.\n" +
-                    "Please enter your password or 'q' to quit: -> : ");
-            originalPassword = scan.next();
-            if (originalPassword.equals("q")) {
-                System.out.println("**********************************");
-                System.out.println("********   CLOSING APP   *********");
-                System.out.println("**********************************");
-                System.exit(0);
-            } else {
-                isValid = passwordValidator(originalPassword);
-            }
+        if (!isValid) {
+            throw new IncorrectPasswordRequirementsException("Password does not meet the requirements");
         }
+        return originalPassword;
+    }
+
+    public String cryptPassword(String originalPassword) {
         return BCrypt.hashpw(originalPassword, BCrypt.gensalt(12));
     }
 
-    private boolean passwordValidator(String password) {
+    public boolean passwordValidator(String password) {
         Pattern pattern = Pattern.compile("^(?=.*[0-9].*[0-9])(?=.*[A-Z])(?=.*[!@£$%^&*()_+=,./?><:|]).{8,}$");
         return pattern.matcher(password).matches();
     }
