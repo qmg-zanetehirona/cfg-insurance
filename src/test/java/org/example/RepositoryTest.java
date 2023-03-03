@@ -2,6 +2,8 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RepositoryTest {
@@ -71,6 +73,49 @@ public class RepositoryTest {
         boolean result = repository.passwordValidator("M12os!");
         // then
         assertFalse(result);
+    }
+
+    @Test
+    public void customerIdFromTable() throws SQLException, IncorrectUsernamePasswordException, UsernameTakenException
+    {
+        //given
+        Repository repository = new Repository();
+        // when
+        int result = repository.getCustomerId("Alex");
+        // then
+        assertEquals(2, result);
+    }
+
+    @Test
+    public void policiesFromCustomerOne() throws SQLException, IncorrectUsernamePasswordException, UsernameTakenException
+    {
+        //given
+        Repository repository = new Repository();
+        // when
+        List<String> result = repository.getListPolicyTypes(2);
+        // then
+        assertEquals(List.of("GOLD"), result);
+    }
+
+    @Test
+    public void policiesFromCustomerMoreThanOne() throws SQLException, IncorrectUsernamePasswordException, UsernameTakenException
+    {
+        //given
+        Repository repository = new Repository();
+        // when
+        List<String> result = repository.getListPolicyTypes(1);
+        // then
+        assertEquals(List.of("BRONZE","GOLD","SILVER","GOLD"), result);
+    }
+    @Test
+    public void policiesFromCustomerZero() throws SQLException, IncorrectUsernamePasswordException, UsernameTakenException
+    {
+        //given
+        Repository repository = new Repository();
+        // when
+        List<String> result = repository.getListPolicyTypes(100);
+        // then
+        assertEquals(List.of(), result);
     }
 
 }

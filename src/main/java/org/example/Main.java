@@ -6,9 +6,9 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Scanner scan = new Scanner(System.in);
-
-        LoginService loginService = new LoginService(new Repository());
+        Repository repository = new Repository();
+        LoginService loginService = new LoginService(repository);
+        PolicyService policyService = new PolicyService(repository);
 
         Thread.sleep(3000);
 
@@ -16,21 +16,9 @@ public class Main {
         System.out.println("*********    WELCOME    **********");
         System.out.println("**********************************");
 
-        String tryAgain = "1";
-        while (tryAgain.equals("1")) {
+        Customer customer = loginService.login();
+        Customer customerConId = policyService.searchPolicy(customer);
 
-            tryAgain = "2";
-            try {
-                loginService.userLoginOrRegistration();
-            } catch (UsernameTakenException | IncorrectUsernamePasswordException | IncorrectPasswordRequirementsException e) {
-                System.out.println(e.getMessage());
-                System.out.print("Would you like to try again:\n" +
-                        "1. Yes \n" +
-                        "Any other key to EXIT: \n" +
-                        "Please enter a value: -> : ");
-                tryAgain = scan.next();
-            }
-        }
         System.out.println();
         System.out.println("**********************************");
         System.out.println("********   CLOSING APP   *********");
