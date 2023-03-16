@@ -1,37 +1,36 @@
-package org.example;
+package org.example.repositories;
 
+import org.example.Customer;
+import org.example.exceptions.IncorrectPasswordRequirementsException;
+import org.example.exceptions.IncorrectUsernamePasswordException;
+import org.example.exceptions.UsernameTakenException;
 import org.mindrot.jbcrypt.BCrypt;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.regex.Pattern;
 
-public class Repository {
+public class RepositoryLogIn {
 
-    private Connection connect;
+    public Connection connect;
 
-    public Repository() {
-        try {
-            String password = "";
-            String user = "postgres";
-            String url = "jdbc:postgresql://localhost:5432/users";
-            connect = DriverManager.getConnection(url, user, password);
-            connect.isValid(1000);
-            System.out.println("Connected to the PostgreSQL server successfully.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+    public RepositoryLogIn(Connection connect) {
+        this.connect = connect;
     }
 
-    public Customer createCustomer(String username, String password) throws SQLException, UsernameTakenException, IncorrectPasswordRequirementsException {
+    public Customer createCustomer(String username, String password) throws SQLException, UsernameTakenException, IncorrectPasswordRequirementsException, IncorrectUsernamePasswordException {
         ResultSet resultSet = connect.createStatement()
                 .executeQuery(String.format(" SELECT * FROM usersregistration WHERE user_username ='%s'", username));
         if (resultSet.next()) {
             throw new UsernameTakenException("Username is taken");
         }
-        String passwordValid = passwordValid(password);
-        String crypt = cryptPassword(passwordValid);
+        passwordValid(password);
+        String crypt = cryptPassword(password);
         connect.createStatement().executeUpdate(
                 String.format(" INSERT INTO usersregistration (user_username,user_password) VALUES ('%s','%s')", username, crypt));
-        return new Customer(username);
+
+        return logInExistingCustomer(username, password);
     }
 
     public Customer logInExistingCustomer(String username, String originalPassword) throws SQLException, IncorrectUsernamePasswordException {
@@ -39,19 +38,19 @@ public class Repository {
                 .executeQuery(String.format(" SELECT * FROM usersregistration WHERE user_username ='%s'", username));
         if (resultSet.next()) {
             String userpassword = resultSet.getString("user_password");
+            int userId = resultSet.getInt("UserId");
             if (BCrypt.checkpw(originalPassword, userpassword)) {
-                return new Customer(username);
+                return new Customer(userId, username);
             }
         }
         throw new IncorrectUsernamePasswordException("Incorrect username or password");
     }
 
-    public String passwordValid(String originalPassword) throws IncorrectPasswordRequirementsException {
+    public void passwordValid(String originalPassword) throws IncorrectPasswordRequirementsException {
         boolean isValid = passwordValidator(originalPassword);
         if (!isValid) {
             throw new IncorrectPasswordRequirementsException("Password does not meet the requirements");
         }
-        return originalPassword;
     }
 
     public String cryptPassword(String originalPassword) {
@@ -62,7 +61,10 @@ public class Repository {
         Pattern pattern = Pattern.compile("^(?=.*[0-9].*[0-9])(?=.*[A-Z])(?=.*[!@£$%^&*()_+=,./?><:|]).{8,}$");
         return pattern.matcher(password).matches();
     }
+
 }
+
+
 
 
 

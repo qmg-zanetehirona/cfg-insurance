@@ -1,39 +1,38 @@
 package org.example;
 
-import java.util.Scanner;
+import org.example.question.Question;
+import org.example.repositories.RepositoryLogIn;
+import org.example.repositories.RepositoryPolicy;
+import org.example.services.*;
+
+import javax.swing.*;
+import java.sql.Connection;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Scanner scan = new Scanner(System.in);
-
-        LoginService loginService = new LoginService(new Repository());
+        InputDialog inputDialog = new InputDialog();
+        Database database = new Database();
+        Connection connection = database.connectWithDB();
+        RepositoryLogIn repositoryLogIn = new RepositoryLogIn(connection);
+        RepositoryPolicy repositoryPolicy = new RepositoryPolicy(connection);
+        OutputDialog outputDialog = new OutputDialog(repositoryPolicy);
+        LoginService loginService = new LoginService(repositoryLogIn,inputDialog,outputDialog);
+        QuestionService questionService = new QuestionService(inputDialog, outputDialog);
+        PriceService priceService = new PriceService(questionService);
+        PolicyCreator policyCreator = new PolicyCreator(inputDialog,priceService,questionService);
+        PolicyService policyService = new PolicyService(inputDialog,outputDialog, repositoryPolicy, policyCreator);
 
         Thread.sleep(3000);
 
-        System.out.println("**********************************");
-        System.out.println("*********    WELCOME    **********");
-        System.out.println("**********************************");
 
-        String tryAgain = "1";
-        while (tryAgain.equals("1")) {
+        inputDialog.messageForUserMD("Hello, Welcome to ProtectFirst!");
 
-            tryAgain = "2";
-            try {
-                loginService.userLoginOrRegistration();
-            } catch (UsernameTakenException | IncorrectUsernamePasswordException | IncorrectPasswordRequirementsException e) {
-                System.out.println(e.getMessage());
-                System.out.print("Would you like to try again:\n" +
-                        "1. Yes \n" +
-                        "Any other key to EXIT: \n" +
-                        "Please enter a value: -> : ");
-                tryAgain = scan.next();
-            }
+        Customer customer = loginService.login();
+
+        while (true) {
+            Customer customerConId = policyService.searchPolicy(customer);
         }
-        System.out.println();
-        System.out.println("**********************************");
-        System.out.println("********   CLOSING APP   *********");
-        System.out.println("**********************************");
     }
 }
