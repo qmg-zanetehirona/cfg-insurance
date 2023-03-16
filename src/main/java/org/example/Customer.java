@@ -3,13 +3,9 @@ package org.example;
 public class Customer {
 
     private final String username;
-    private int userid;
+    private final int userid;
 
-    public Customer(String username) {
-        this.username = username;
-    }
-
-    public Customer(String username, int userid) {
+    public Customer(int userid, String username) {
         this.username = username;
         this.userid = userid;
     }
