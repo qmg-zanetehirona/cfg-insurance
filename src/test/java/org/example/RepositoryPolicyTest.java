@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.example.Enum.PolicyTypeOptions.BRONZE;
+import static org.example.Enum.PolicyTypeOptions.GOLD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -92,14 +94,14 @@ public class RepositoryPolicyTest {
 
         when(mockResultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(mockResultSet.getInt("PolicyId")).thenReturn(1000).thenReturn(1001);
-        when(mockResultSet.getString("PolicyType")).thenReturn("BRONZE").thenReturn("GOLD");
+        when(mockResultSet.getString("PolicyType")).thenReturn(BRONZE.getValue()).thenReturn(GOLD.getValue());
         when(mockResultSet.getDouble("PolicyPrice")).thenReturn(100.0).thenReturn(300.0);
         when(mockResultSet.getString("PolicyPostcode")).thenReturn("E2 8FW").thenReturn("X26 4TT");
         when(mockResultSet.getInt("User_Id")).thenReturn(1);
 
         List<PolicyDTO> expected = new ArrayList<>();
-        expected.add(new PolicyDTO(1000, "BRONZE", 100.0, "E2 8FW", 1));
-        expected.add(new PolicyDTO(1001, "GOLD", 300.0, "X26 4TT", 1));
+        expected.add(new PolicyDTO(1000, BRONZE.getValue(), 100.0, "E2 8FW", 1));
+        expected.add(new PolicyDTO(1001, GOLD.getValue(), 300.0, "X26 4TT", 1));
 
         //when
         List<PolicyDTO> result = repositoryPolicy.getPolicyDTO(1);

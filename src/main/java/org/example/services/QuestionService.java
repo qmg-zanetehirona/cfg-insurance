@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.example.Enum.YesNoOption;
 import org.example.InputDialog;
 import org.example.OutputDialog;
 import org.example.question.*;
@@ -32,8 +33,8 @@ public class QuestionService {
                 questions.get(i).validate(ans.toUpperCase());
             } catch (Exception e) {
                 outputDialog.outputErrorMessage(e);
-                String response = inputDialog.inputWouldYouLikeToTryAgainCD(e);
-                if (response != null && response.equals("1")) {
+                YesNoOption response = inputDialog.inputWouldYouLikeToTryAgainCD(e);
+                if (response != null && response.isYes()) {
                     continue;
                 } else {
                     throw e;

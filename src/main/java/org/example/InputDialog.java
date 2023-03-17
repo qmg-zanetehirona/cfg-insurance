@@ -1,6 +1,10 @@
 package org.example;
 
 import com.toedter.calendar.JDateChooser;
+import org.example.Enum.BedroomsQuantityOptions;
+import org.example.Enum.LogInSignUpOption;
+import org.example.Enum.ViewCreatePolicyOptions;
+import org.example.Enum.YesNoOption;
 import org.example.question.Question;
 
 import javax.imageio.ImageIO;
@@ -18,27 +22,27 @@ public class InputDialog {
     public InputDialog() throws IOException {
     }
 
-    public String inputWouldYouLikeToTryAgainCD(Exception e) {
+    public YesNoOption inputWouldYouLikeToTryAgainCD(Exception e) {
         int choice = JOptionPane.showConfirmDialog(null,
                 "Would you like to try again?",
                 "Choose an option",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 icon);
-        return String.valueOf(choice+1);
+        return YesNoOption.from(choice);
     }
 
-    public String inputChooseLoginSignUpExitOD() {
-            String[] options = {"Log in", "Sign up", "Exit"};
+    public LogInSignUpOption inputChooseLoginSignUpExitOD() {
+            String[] options = {"Log in", "Sign up"};
             int choice = JOptionPane.showOptionDialog(null,
                     "What would you like to do:",
                     "Choose an option",
-                    0,
+                    JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
                     icon,
                     options,
                     "Log in");
-            return String.valueOf(choice + 1);
+            return LogInSignUpOption.from(choice);
         }
 
     public void messageForUserMD(String message) {
@@ -69,7 +73,7 @@ public class InputDialog {
         return text.getText();
     }
 
-    public String inputChooseViewCreateLogOutOD() {
+    public ViewCreatePolicyOptions inputChooseViewCreateLogOutOD() {
 
         String[] options = {"View existing policy", "Create a new policy", "Log out"};
         int choice = JOptionPane.showOptionDialog(null,
@@ -80,7 +84,7 @@ public class InputDialog {
                 icon,
                 options,
                 "View existing policy");
-        return String.valueOf(choice + 1);
+        return ViewCreatePolicyOptions.from(choice);
     }
 
     public String inputQuestions(Question question) {

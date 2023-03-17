@@ -1,5 +1,7 @@
 package org.example.services;
 
+import org.example.Enum.BedroomsQuantityOptions;
+import org.example.Enum.PolicyTypeOptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -8,6 +10,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.example.Enum.BedroomsQuantityOptions.*;
+import static org.example.Enum.PolicyTypeOptions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -22,8 +26,8 @@ public class PriceServiceTest {
 
         PriceService priceService = new PriceService(questionService);
         Map<String, String> questionAndAnswers = new HashMap<>();
-        questionAndAnswers.put("no_bedrooms", "1");
-        questionAndAnswers.put("policy_type", "3");
+        questionAndAnswers.put("no_bedrooms", ONE_BEDROOM.getQuantity());
+        questionAndAnswers.put("policy_type", GOLD.getValue());
         questionAndAnswers.put("postcode", "E2 8FW");
         //when
         double result = priceService.calculatePolicyPrice(questionAndAnswers);
@@ -36,8 +40,8 @@ public class PriceServiceTest {
 
         PriceService priceService = new PriceService(questionService);
         Map<String, String> questionAndAnswers = new HashMap<>();
-        questionAndAnswers.put("no_bedrooms", "3");
-        questionAndAnswers.put("policy_type", "1");
+        questionAndAnswers.put("no_bedrooms", MORE_THAN_TWO_BEDROOMS.getQuantity());
+        questionAndAnswers.put("policy_type", BRONZE.getValue());
         questionAndAnswers.put("postcode", "E2 8FW");
         //when
         double result = priceService.calculatePolicyPrice(questionAndAnswers);
@@ -50,8 +54,8 @@ public class PriceServiceTest {
 
         PriceService priceService = new PriceService(questionService);
         Map<String, String> questionAndAnswers = new HashMap<>();
-        questionAndAnswers.put("no_bedrooms", "2");
-        questionAndAnswers.put("policy_type", "2");
+        questionAndAnswers.put("no_bedrooms", TWO_BEDROOMS.getQuantity());
+        questionAndAnswers.put("policy_type", SILVER.getValue());
         questionAndAnswers.put("postcode", "E2 8FW");
         //when
         double result = priceService.calculatePolicyPrice(questionAndAnswers);
@@ -65,7 +69,7 @@ public class PriceServiceTest {
         PriceService priceService = new PriceService(questionService);
         Map<String, String> questionAndAnswers = new HashMap<>();
         questionAndAnswers.put("no_bedrooms", "5");
-        questionAndAnswers.put("policy_type", "2");
+        questionAndAnswers.put("policy_type", SILVER.getValue());
         questionAndAnswers.put("postcode", "E2 8FW");
         //then
         assertThrows(UnsupportedOperationException.class, () -> priceService.calculatePolicyPrice(questionAndAnswers));
