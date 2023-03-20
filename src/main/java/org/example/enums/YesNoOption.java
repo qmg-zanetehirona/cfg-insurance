@@ -1,12 +1,12 @@
-package org.example.Enum;
+package org.example.enums;
 
 public enum YesNoOption {
     YES(0), NO(1);
 
-    private final int i;
+    private final int choice;
 
-    YesNoOption(int i) {
-        this.i = i;
+    YesNoOption(int choice) {
+        this.choice = choice;
     }
 
     public boolean isYes(){
@@ -19,7 +19,7 @@ public enum YesNoOption {
 
     public static YesNoOption from(int option){
         for (YesNoOption yesNoOption : values()) {
-            if(yesNoOption.i == option) {
+            if(yesNoOption.choice == option) {
                 return yesNoOption;
             }
         }

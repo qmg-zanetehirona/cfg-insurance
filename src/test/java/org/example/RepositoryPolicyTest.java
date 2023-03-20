@@ -3,7 +3,6 @@ package org.example;
 import org.example.exceptions.IncorrectUsernamePasswordException;
 import org.example.policies.PolicyDTO;
 import org.example.repositories.RepositoryPolicy;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -17,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.example.Enum.PolicyTypeOptions.BRONZE;
-import static org.example.Enum.PolicyTypeOptions.GOLD;
+import static org.example.enums.PolicyTypeOption.BRONZE;
+import static org.example.enums.PolicyTypeOption.GOLD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

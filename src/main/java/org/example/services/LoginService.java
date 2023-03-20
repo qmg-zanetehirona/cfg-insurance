@@ -1,8 +1,8 @@
 package org.example.services;
 
 import org.example.Customer;
-import org.example.Enum.LogInSignUpOption;
-import org.example.Enum.YesNoOption;
+import org.example.enums.LogInSignUpOption;
+import org.example.enums.YesNoOption;
 import org.example.InputDialog;
 import org.example.OutputDialog;
 import org.example.exceptions.IncorrectPasswordRequirementsException;
@@ -12,8 +12,8 @@ import org.example.repositories.RepositoryLogIn;
 
 import java.sql.SQLException;
 
-import static org.example.Enum.YesNoOption.NO;
-import static org.example.Enum.YesNoOption.YES;
+import static org.example.enums.YesNoOption.NO;
+import static org.example.enums.YesNoOption.YES;
 
 public class LoginService {
 
@@ -36,8 +36,7 @@ public class LoginService {
                 return userLoginOrRegistration();
             } catch (Exception e) {
                 outputDialog.outputErrorMessage(e);
-                YesNoOption response = inputDialog.inputWouldYouLikeToTryAgainCD(e);
-                tryAgain = response != null && response.isYes() ? YES : NO;
+                tryAgain = inputDialog.inputWouldYouLikeToTryAgainCD(e);
             }
         }
         closeApp();

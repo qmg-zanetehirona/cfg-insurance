@@ -1,7 +1,6 @@
 package org.example.services;
 
 import org.example.*;
-import org.example.Enum.ViewCreatePolicyOptions;
 import org.example.policies.Policy;
 import org.example.policies.SilverPolicy;
 import org.example.repositories.RepositoryPolicy;
@@ -13,8 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.example.Enum.ViewCreatePolicyOptions.CREATE;
-import static org.example.Enum.ViewCreatePolicyOptions.VIEW;
+import static org.example.enums.ViewCreatePolicyOption.CREATE;
+import static org.example.enums.ViewCreatePolicyOption.VIEW;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;

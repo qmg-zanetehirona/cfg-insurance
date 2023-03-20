@@ -1,7 +1,5 @@
 package org.example.services;
 
-import org.example.Enum.BedroomsQuantityOptions;
-import org.example.Enum.PolicyTypeOptions;
 import org.example.InputDialog;
 import org.example.policies.BronzePolicy;
 import org.example.policies.Policy;
@@ -14,8 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.example.Enum.BedroomsQuantityOptions.*;
-import static org.example.Enum.PolicyTypeOptions.*;
+import static org.example.enums.BedroomsQuantityOption.*;
+import static org.example.enums.PolicyTypeOption.*;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.Mockito.when;
 

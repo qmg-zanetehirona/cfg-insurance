@@ -6,17 +6,16 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Inicializer inicializer = new Inicializer();
-        PolicyService policyService = new PolicyService(inicializer.inputDialog, inicializer.outputDialog, inicializer.repositoryPolicy, inicializer.policyCreator);
+        Initializer initializer = new Initializer();
 
         Thread.sleep(3000);
 
-        inicializer.inputDialog.messageForUserMD("Hello, Welcome to ProtectFirst!");
+        initializer.inputDialog.messageForUserMD("Hello, Welcome to ProtectFirst!");
 
-        Customer customer = inicializer.loginService.login();
+        Customer customer = initializer.loginService.login();
 
         while (true) {
-            Customer customerConId = policyService.searchPolicy(customer);
+            Customer customerConId = initializer.getPolicyService().searchPolicy(customer);
         }
     }
 }

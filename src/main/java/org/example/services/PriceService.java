@@ -1,12 +1,9 @@
 package org.example.services;
 
-import org.example.Enum.BedroomsQuantityOptions;
-import org.example.Enum.PolicyTypeOptions;
-
 import java.util.Map;
 
-import static org.example.Enum.BedroomsQuantityOptions.*;
-import static org.example.Enum.PolicyTypeOptions.*;
+import static org.example.enums.BedroomsQuantityOption.*;
+import static org.example.enums.PolicyTypeOption.*;
 
 public class PriceService {
 

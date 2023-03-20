@@ -1,7 +1,7 @@
 package org.example.services;
 
 import org.example.Customer;
-import org.example.Enum.ViewCreatePolicyOptions;
+import org.example.enums.ViewCreatePolicyOption;
 import org.example.InputDialog;
 import org.example.OutputDialog;
 import org.example.policies.Policy;
@@ -9,8 +9,8 @@ import org.example.repositories.RepositoryPolicy;
 
 import java.sql.SQLException;
 
-import static org.example.Enum.ViewCreatePolicyOptions.CREATE;
-import static org.example.Enum.ViewCreatePolicyOptions.VIEW;
+import static org.example.enums.ViewCreatePolicyOption.CREATE;
+import static org.example.enums.ViewCreatePolicyOption.VIEW;
 
 public class PolicyService {
 
@@ -27,7 +27,7 @@ public class PolicyService {
     }
 
     public Customer searchPolicy(Customer customer) {
-        ViewCreatePolicyOptions option = inputDialog.inputChooseViewCreateLogOutOD();
+        ViewCreatePolicyOption option = inputDialog.inputChooseViewCreateLogOutOD();
         try {
             runSearchPolicyFunctionSelected(option, customer);
         } catch (Exception e) {
@@ -36,10 +36,10 @@ public class PolicyService {
         return customer;
     }
 
-    private void runSearchPolicyFunctionSelected(ViewCreatePolicyOptions option, Customer customer) throws Exception {
-        if (option.equals(VIEW)) {
+    private void runSearchPolicyFunctionSelected(ViewCreatePolicyOption option, Customer customer) throws Exception {
+        if (option.isView()) {
             printPoliciesAvailable(customer.getUserid());
-        } else if (option.equals(CREATE)) {
+        } else if (option.isCreate()) {
             createCustomerPolicies(customer);
         } else {
             closeApp();

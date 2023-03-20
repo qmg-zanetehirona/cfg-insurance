@@ -1,7 +1,5 @@
 package org.example.services;
 
-import org.example.Enum.BedroomsQuantityOptions;
-import org.example.Enum.PolicyTypeOptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -10,8 +8,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.example.Enum.BedroomsQuantityOptions.*;
-import static org.example.Enum.PolicyTypeOptions.*;
+import static org.example.enums.BedroomsQuantityOption.*;
+import static org.example.enums.PolicyTypeOption.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

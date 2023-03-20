@@ -1,13 +1,13 @@
-package org.example.Enum;
+package org.example.enums;
 
 public enum LogInSignUpOption {
 
     LOG_IN(0), SIGN_UP(1);
 
-    private final int i;
+    private final int choice;
 
-    LogInSignUpOption(int i) {
-        this.i = i;
+    LogInSignUpOption(int choice) {
+        this.choice = choice;
     }
 
     public boolean isLogIn() { return this == LOG_IN;
@@ -19,7 +19,7 @@ public enum LogInSignUpOption {
 
     public static LogInSignUpOption from(int option){
         for (LogInSignUpOption logInSignUpOption : values()) {
-            if(logInSignUpOption.i == option) {
+            if(logInSignUpOption.choice == option) {
                 return logInSignUpOption;
             }
         }

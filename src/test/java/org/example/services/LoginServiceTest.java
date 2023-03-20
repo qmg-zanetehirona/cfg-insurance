@@ -2,7 +2,6 @@ package org.example.services;
 
 import org.example.Customer;
 import org.example.Database;
-import org.example.Enum.LogInSignUpOption;
 import org.example.InputDialog;
 import org.example.OutputDialog;
 import org.example.exceptions.IncorrectPasswordRequirementsException;
@@ -17,8 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.example.Enum.LogInSignUpOption.LOG_IN;
-import static org.example.Enum.LogInSignUpOption.SIGN_UP;
+import static org.example.enums.LogInSignUpOption.LOG_IN;
+import static org.example.enums.LogInSignUpOption.SIGN_UP;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;

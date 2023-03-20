@@ -1,6 +1,6 @@
 package org.example.services;
 
-import org.example.Enum.YesNoOption;
+import org.example.enums.YesNoOption;
 import org.example.InputDialog;
 import org.example.OutputDialog;
 import org.example.question.*;
@@ -19,7 +19,7 @@ public class QuestionService {
         this.outputDialog = outputDialog;
     }
 
-    List<Question> questions = List.of(new No_BedroomsQuestion(), new PolicyTypeQuestion(), new PostcodeQuestion(), new PolicyStartDate());
+    List<Question> questions = List.of(new BedroomQuantityQuestion(), new PolicyTypeQuestion(), new PostcodeQuestion(), new PolicyStartDate());
 
     public Map<String, String> askQuestions() throws Exception {
         return collectAnswerSelectQuestions();

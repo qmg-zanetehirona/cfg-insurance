@@ -1,6 +1,5 @@
 package org.example.services;
 
-import org.example.Enum.PolicyTypeOptions;
 import org.example.InputDialog;
 import org.example.policies.BronzePolicy;
 import org.example.policies.GoldPolicy;
@@ -9,7 +8,7 @@ import org.example.policies.SilverPolicy;
 
 import java.util.Map;
 
-import static org.example.Enum.PolicyTypeOptions.*;
+import static org.example.enums.PolicyTypeOption.*;
 
 public class PolicyCreator {
     InputDialog inputDialog;

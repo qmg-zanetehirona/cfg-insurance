@@ -1,10 +1,9 @@
 package org.example;
 
 import com.toedter.calendar.JDateChooser;
-import org.example.Enum.BedroomsQuantityOptions;
-import org.example.Enum.LogInSignUpOption;
-import org.example.Enum.ViewCreatePolicyOptions;
-import org.example.Enum.YesNoOption;
+import org.example.enums.LogInSignUpOption;
+import org.example.enums.ViewCreatePolicyOption;
+import org.example.enums.YesNoOption;
 import org.example.question.Question;
 
 import javax.imageio.ImageIO;
@@ -73,7 +72,7 @@ public class InputDialog {
         return text.getText();
     }
 
-    public ViewCreatePolicyOptions inputChooseViewCreateLogOutOD() {
+    public ViewCreatePolicyOption inputChooseViewCreateLogOutOD() {
 
         String[] options = {"View existing policy", "Create a new policy", "Log out"};
         int choice = JOptionPane.showOptionDialog(null,
@@ -84,7 +83,7 @@ public class InputDialog {
                 icon,
                 options,
                 "View existing policy");
-        return ViewCreatePolicyOptions.from(choice);
+        return ViewCreatePolicyOption.from(choice);
     }
 
     public String inputQuestions(Question question) {

@@ -2,15 +2,12 @@ package org.example;
 
 import org.example.repositories.RepositoryLogIn;
 import org.example.repositories.RepositoryPolicy;
-import org.example.services.LoginService;
-import org.example.services.PolicyCreator;
-import org.example.services.PriceService;
-import org.example.services.QuestionService;
+import org.example.services.*;
 
 import java.io.IOException;
 import java.sql.Connection;
 
-public class Inicializer {
+public class Initializer {
 
     InputDialog inputDialog = new InputDialog();
     Database database = new Database();
@@ -22,7 +19,28 @@ public class Inicializer {
     QuestionService questionService = new QuestionService(inputDialog, outputDialog);
     PriceService priceService = new PriceService(questionService);
     PolicyCreator policyCreator = new PolicyCreator(inputDialog,priceService,questionService);
+    PolicyService policyService = new PolicyService(inputDialog, outputDialog, repositoryPolicy, policyCreator);
 
-    public Inicializer() throws IOException {
+    public Initializer() throws IOException {
+    }
+
+    public InputDialog getInputDialog() {
+        return inputDialog;
+    }
+
+    public RepositoryPolicy getRepositoryPolicy() {
+        return repositoryPolicy;
+    }
+
+    public OutputDialog getOutputDialog() {
+        return outputDialog;
+    }
+
+    public PolicyCreator getPolicyCreator() {
+        return policyCreator;
+    }
+
+    public PolicyService getPolicyService() {
+        return policyService;
     }
 }
