@@ -1,6 +1,6 @@
 package org.example.question;
 
-public class No_BedroomsQuestion implements Question {
+public class BedroomQuantityQuestion implements Question {
 
     @Override
     public String id() {

@@ -12,6 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.example.enums.ViewCreatePolicyOption.CREATE;
+import static org.example.enums.ViewCreatePolicyOption.VIEW;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -34,12 +36,12 @@ public class PolicyServiceTest {
     PolicyCreator policyCreator;
 
     @Test
-    public void searchPolicySearchTest() throws SQLException {
+    public void searchPolicyViewTest() throws SQLException {
 
         //given
         PolicyService policyService = new PolicyService(inputDialog, outputDialog, new RepositoryPolicy(database.connectWithDB()), policyCreator);
         Customer ola = new Customer(6, "Ola");
-        when(inputDialog.inputChooseViewCreateLogOutOD()).thenReturn("1");
+        when(inputDialog.inputChooseViewCreateLogOutOD()).thenReturn(VIEW);
         doNothing().when(outputDialog).outputPoliciesAvailable(anyInt());
         //when
         Customer result = policyService.searchPolicy(ola);
@@ -56,7 +58,7 @@ public class PolicyServiceTest {
         PolicyService policyService = new PolicyService(inputDialog, outputDialog, repositoryPolicy, policyCreator);
         Customer oscar = new Customer(6, "Oscar");
         Policy policy = new SilverPolicy(200.0, "E3 8FF", "04-10-2023");
-        when(inputDialog.inputChooseViewCreateLogOutOD()).thenReturn("2");
+        when(inputDialog.inputChooseViewCreateLogOutOD()).thenReturn(CREATE);
         when(policyCreator.create()).thenReturn(policy);
         //when
         Customer result = policyService.searchPolicy(oscar);

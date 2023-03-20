@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.example.enums.BedroomsQuantityOption.*;
+import static org.example.enums.PolicyTypeOption.*;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.Mockito.when;
 
@@ -32,8 +34,8 @@ class PolicyCreatorTest {
         //given
         Policy policyTest = new BronzePolicy(100.0, "E2 8FW", "04-10-2023");
         Map<String, String> questionAndAnswers = new HashMap<>();
-        questionAndAnswers.put("no_bedrooms", "1");
-        questionAndAnswers.put("policy_type", "1");
+        questionAndAnswers.put("no_bedrooms", ONE_BEDROOM.getQuantity());
+        questionAndAnswers.put("policy_type", BRONZE.getValue());
         questionAndAnswers.put("postcode", "E2 8FW");
         questionAndAnswers.put("policyStartDate", "04-10-2023");
 

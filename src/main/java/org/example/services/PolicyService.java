@@ -1,12 +1,16 @@
 package org.example.services;
 
 import org.example.Customer;
+import org.example.enums.ViewCreatePolicyOption;
 import org.example.InputDialog;
 import org.example.OutputDialog;
 import org.example.policies.Policy;
 import org.example.repositories.RepositoryPolicy;
 
 import java.sql.SQLException;
+
+import static org.example.enums.ViewCreatePolicyOption.CREATE;
+import static org.example.enums.ViewCreatePolicyOption.VIEW;
 
 public class PolicyService {
 
@@ -23,7 +27,7 @@ public class PolicyService {
     }
 
     public Customer searchPolicy(Customer customer) {
-        String option = inputDialog.inputChooseViewCreateLogOutOD();
+        ViewCreatePolicyOption option = inputDialog.inputChooseViewCreateLogOutOD();
         try {
             runSearchPolicyFunctionSelected(option, customer);
         } catch (Exception e) {
@@ -32,10 +36,10 @@ public class PolicyService {
         return customer;
     }
 
-    private void runSearchPolicyFunctionSelected(String option, Customer customer) throws Exception {
-        if (option.equals("1")) {
+    private void runSearchPolicyFunctionSelected(ViewCreatePolicyOption option, Customer customer) throws Exception {
+        if (option.isView()) {
             printPoliciesAvailable(customer.getUserid());
-        } else if (option.equals("2")) {
+        } else if (option.isCreate()) {
             createCustomerPolicies(customer);
         } else {
             closeApp();
@@ -49,7 +53,6 @@ public class PolicyService {
                 "Type: " + personalizedPolicy.getType() + "\nPrice :" + personalizedPolicy.getPrice() + "\nStart Date :" + personalizedPolicy.getStartDate());
     }
 
-
     private void printPoliciesAvailable(int customerId) throws SQLException {
         outputDialog.outputPoliciesAvailable(customerId);
     }
@@ -57,6 +60,5 @@ public class PolicyService {
         inputDialog.messageForUserMD("Closing app...");
         System.exit(0);
     }
-
 
 }

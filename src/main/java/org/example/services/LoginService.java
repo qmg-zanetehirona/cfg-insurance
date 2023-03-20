@@ -1,6 +1,8 @@
 package org.example.services;
 
 import org.example.Customer;
+import org.example.enums.LogInSignUpOption;
+import org.example.enums.YesNoOption;
 import org.example.InputDialog;
 import org.example.OutputDialog;
 import org.example.exceptions.IncorrectPasswordRequirementsException;
@@ -9,6 +11,9 @@ import org.example.exceptions.UsernameTakenException;
 import org.example.repositories.RepositoryLogIn;
 
 import java.sql.SQLException;
+
+import static org.example.enums.YesNoOption.NO;
+import static org.example.enums.YesNoOption.YES;
 
 public class LoginService {
 
@@ -25,15 +30,13 @@ public class LoginService {
     }
 
     public Customer login() {
-        String tryAgain = "1";
-        while (tryAgain.equals("1")) {
+        YesNoOption tryAgain = YES;
+        while (tryAgain.isYes()) {
             try {
                 return userLoginOrRegistration();
             } catch (Exception e) {
-                //TODO JOPTION ERROR
                 outputDialog.outputErrorMessage(e);
-                String response = inputDialog.inputWouldYouLikeToTryAgainCD(e);
-                tryAgain = response != null && response.equals("1") ? "1" : "0";
+                tryAgain = inputDialog.inputWouldYouLikeToTryAgainCD(e);
             }
         }
         closeApp();
@@ -41,24 +44,17 @@ public class LoginService {
     }
 
     public Customer userLoginOrRegistration() throws Exception {
-
-        String option = inputDialog.inputChooseLoginSignUpExitOD();
-
-        if (option.equals("1") || option.equals("2")) {
-
-            String username = inputDialog.inputUsernameIM();
-            String originalPassword = inputDialog.inputOriginalPasswordIM();
-            return runFunctionSelected(option, username, originalPassword);
-        }
-        closeApp();
-        return null;
+        LogInSignUpOption logInSignUpOption = inputDialog.inputChooseLoginSignUpExitOD();
+        String username = inputDialog.inputUsernameIM();
+        String originalPassword = inputDialog.inputOriginalPasswordIM();
+        return runFunctionSelected(logInSignUpOption, username, originalPassword);
     }
 
-    public Customer runFunctionSelected(String option, String username, String originalPassword)
+    public Customer runFunctionSelected(LogInSignUpOption logInSignUpOption, String username, String originalPassword)
             throws
             SQLException, IncorrectUsernamePasswordException, UsernameTakenException, IncorrectPasswordRequirementsException {
         Customer customer;
-        if (option.equals("1")) {
+        if (logInSignUpOption.isLogIn()) {
             customer = repositoryLogIn.logInExistingCustomer(username, originalPassword);
             inputDialog.messageForUserMD("Access granted!");
         } else {

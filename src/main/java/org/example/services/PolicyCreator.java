@@ -8,6 +8,8 @@ import org.example.policies.SilverPolicy;
 
 import java.util.Map;
 
+import static org.example.enums.PolicyTypeOption.*;
+
 public class PolicyCreator {
     InputDialog inputDialog;
     PriceService priceService;
@@ -29,13 +31,13 @@ public class PolicyCreator {
         String postcode = questionAndAnswers.get("postcode");
         String startdate = questionAndAnswers.get("policyStartDate");
 
-        if (questionAndAnswers.get("policy_type").equals("1")) {
+        if (questionAndAnswers.get("policy_type").equals(BRONZE.getValue())) {
             return new BronzePolicy(policyPrice, postcode, startdate);
         }
-        if (questionAndAnswers.get("policy_type").equals("2")) {
+        if (questionAndAnswers.get("policy_type").equals(SILVER.getValue())) {
             return new SilverPolicy(policyPrice, postcode, startdate);
         }
-        if (questionAndAnswers.get("policy_type").equals("3")) {
+        if (questionAndAnswers.get("policy_type").equals(GOLD.getValue())) {
             return new GoldPolicy(policyPrice, postcode, startdate);
         }
         throw new UnsupportedOperationException("Incorrect option for POLICY TYPE");
