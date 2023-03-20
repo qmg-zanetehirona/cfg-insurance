@@ -10,9 +10,9 @@ public class Main {
 
         Thread.sleep(3000);
 
-        initializer.inputDialog.messageForUserMD("Hello, Welcome to ProtectFirst!");
+        initializer.getInputDialog().messageForUserMD("Hello, Welcome to ProtectFirst!");
 
-        Customer customer = initializer.loginService.login();
+        Customer customer = initializer.getLoginService().login();
 
         while (true) {
             Customer customerConId = initializer.getPolicyService().searchPolicy(customer);
