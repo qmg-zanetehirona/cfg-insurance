@@ -1,10 +1,11 @@
 package org.example.services;
 
 import org.example.Customer;
+import org.example.userwindows.LoginWindow;
 import org.example.enums.LogInSignUpOption;
 import org.example.enums.YesNoOption;
-import org.example.InputDialog;
-import org.example.OutputDialog;
+import org.example.userwindows.InputDialog;
+import org.example.userwindows.OutputDialog;
 import org.example.exceptions.IncorrectPasswordRequirementsException;
 import org.example.exceptions.IncorrectUsernamePasswordException;
 import org.example.exceptions.UsernameTakenException;
@@ -12,7 +13,6 @@ import org.example.repositories.RepositoryLogIn;
 
 import java.sql.SQLException;
 
-import static org.example.enums.YesNoOption.NO;
 import static org.example.enums.YesNoOption.YES;
 
 public class LoginService {
@@ -45,8 +45,9 @@ public class LoginService {
 
     public Customer userLoginOrRegistration() throws Exception {
         LogInSignUpOption logInSignUpOption = inputDialog.inputChooseLoginSignUpExitOD();
-        String username = inputDialog.inputUsernameIM();
-        String originalPassword = inputDialog.inputOriginalPasswordIM();
+        LoginWindow loginWindow = new LoginWindow();
+        String username = loginWindow.getUsername();
+        String originalPassword = loginWindow.getPassword();
         return runFunctionSelected(logInSignUpOption, username, originalPassword);
     }
 

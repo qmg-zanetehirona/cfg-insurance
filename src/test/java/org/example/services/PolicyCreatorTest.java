@@ -1,6 +1,6 @@
 package org.example.services;
 
-import org.example.InputDialog;
+import org.example.userwindows.InputDialog;
 import org.example.policies.BronzePolicy;
 import org.example.policies.Policy;
 import org.junit.jupiter.api.Test;

@@ -43,6 +43,11 @@ public class RepositoryPolicy {
                 (String.format(" INSERT INTO Policies (PolicyType,PolicyPrice,PolicyPostcode,User_Id) VALUES ('%s','%s','%s','%s')", policy.getType(), policy.getPrice(), policy.getPostCode(), customer.getUserid()));
     }
 
+    public void deletePolicyDB(int polityId) throws SQLException {
+        connect.createStatement().executeUpdate
+                (String.format(" DELETE FROM Policies WHERE PolicyId = '%s'", polityId));
+    }
+
     public List<PolicyDTO> getPolicyDTO(int customerId) throws SQLException {
         List<PolicyDTO> policyDTOlist = new ArrayList<>();
         ResultSet resultSet = connect.createStatement().
@@ -59,6 +64,31 @@ public class RepositoryPolicy {
             String policyPostCode = resultSet.getString("PolicyPostcode");
             int userId = resultSet.getInt("User_Id");
            policyDTOlist.add(new PolicyDTO(policyId, policyType, policyPrice, policyPostCode, userId));
+        }
+        return policyDTOlist;
+    }
+
+    public void modifyPolicyDB(int policyid, String newPolicyType, int priceAdjustment) throws SQLException {
+        connect.createStatement().executeUpdate
+                (String.format(" UPDATE Policies SET PolicyType = '%s', PolicyPrice = PolicyPrice + '%s' WHERE PolicyId = '%s'", newPolicyType,priceAdjustment,policyid));
+    }
+
+    public List<PolicyDTO> getPolicyDTOwithPolicyId(int selectedPolicyId) throws SQLException {
+        List<PolicyDTO> policyDTOlist = new ArrayList<>();
+        ResultSet resultSet = connect.createStatement().
+                executeQuery(String.format(" SELECT " +
+                        "PolicyId,\n" +
+                        "PolicyType,\n" +
+                        "PolicyPrice,\n" +
+                        "PolicyPostcode,\n" +
+                        "User_Id FROM Policies WHERE PolicyId = '%s'", selectedPolicyId));
+        while (resultSet.next()) {
+            int policyId = resultSet.getInt("PolicyId");
+            String policyType = resultSet.getString("PolicyType");
+            double policyPrice = resultSet.getDouble("PolicyPrice");
+            String policyPostCode = resultSet.getString("PolicyPostcode");
+            int userId = resultSet.getInt("User_Id");
+            policyDTOlist.add(new PolicyDTO(policyId, policyType, policyPrice, policyPostCode, userId));
         }
         return policyDTOlist;
     }

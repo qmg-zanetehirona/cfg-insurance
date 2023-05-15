@@ -49,10 +49,7 @@ public class PolicyDTO {
 
     @Override
     public String toString() {
-        return " Policy Id:" + policyId +
-                ", Postcode: " + policyPostcode +
-                ", Type: " + policyType +
-                ", Price: " + policyPrice + " £";
+        return String.format("Policy Id: %-12s Price: £%-7s     Postcode: %-15s Type: %-10s",
+                policyId, policyPrice, policyPostcode, policyType);
     }
-
 }

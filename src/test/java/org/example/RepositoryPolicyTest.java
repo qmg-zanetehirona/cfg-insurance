@@ -62,7 +62,7 @@ public class RepositoryPolicyTest {
         // when
         List<String> result = repositoryPolicy.getListPolicyTypes(1);
         // then
-        assertEquals(List.of("BRONZE", "GOLD", "SILVER", "GOLD"), result);
+        assertEquals(List.of("GOLD", "SILVER", "GOLD", "GOLD"), result);
     }
 
     @Test

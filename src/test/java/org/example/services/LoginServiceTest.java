@@ -1,13 +1,13 @@
 package org.example.services;
 
-import org.example.Customer;
-import org.example.Database;
-import org.example.InputDialog;
-import org.example.OutputDialog;
+import org.example.*;
 import org.example.exceptions.IncorrectPasswordRequirementsException;
 import org.example.exceptions.IncorrectUsernamePasswordException;
 import org.example.exceptions.UsernameTakenException;
 import org.example.repositories.RepositoryLogIn;
+import org.example.userwindows.InputDialog;
+import org.example.userwindows.LoginWindow;
+import org.example.userwindows.OutputDialog;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -20,8 +20,7 @@ import static org.example.enums.LogInSignUpOption.LOG_IN;
 import static org.example.enums.LogInSignUpOption.SIGN_UP;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class LoginServiceTest {
@@ -36,6 +35,8 @@ public class LoginServiceTest {
 
     @Mock
     OutputDialog outputDialog;
+    @Mock
+    LoginWindow loginWindow;
 
     @Test
     public void loginServiceCreateOption2Test() throws Exception {
@@ -43,11 +44,13 @@ public class LoginServiceTest {
         LoginService loginService = new LoginService(repositoryLogIn, inputDialog, outputDialog);
         Customer maxi = new Customer(26, "Maxi");
         when(inputDialog.inputChooseLoginSignUpExitOD()).thenReturn(SIGN_UP);
-        when(inputDialog.inputUsernameIM()).thenReturn("Maxi");
-        when(inputDialog.inputOriginalPasswordIM()).thenReturn("Maxi1234!");
+        //when(loginWindow.getUsername()).thenReturn("Maxi");
+        //when(loginWindow.getPassword()).thenReturn("Maxi1234!");
         when(repositoryLogIn.createCustomer("Maxi", "Maxi1234!")).thenReturn(maxi);
+
         //when
         Customer result = loginService.login();
+
         //then
         assertInstanceOf(Customer.class, result);
         assertThat(result).isEqualTo(maxi);
@@ -59,8 +62,8 @@ public class LoginServiceTest {
         LoginService loginService = new LoginService(repositoryLogIn, inputDialog, outputDialog);
         Customer maxi = new Customer(26, "Maxi");
         when(inputDialog.inputChooseLoginSignUpExitOD()).thenReturn(LOG_IN);
-        when(inputDialog.inputUsernameIM()).thenReturn("Maxi");
-        when(inputDialog.inputOriginalPasswordIM()).thenReturn("Maxi1234!");
+        //when(loginWindow.getUsername()).thenReturn("Maxi");
+        //when(loginWindow.getPassword()).thenReturn("Maxi1234!");
         when(repositoryLogIn.logInExistingCustomer("Maxi", "Maxi1234!")).thenReturn(maxi);
         //when
         Customer result = loginService.login();

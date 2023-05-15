@@ -1,8 +1,8 @@
 package org.example.services;
 
 import org.example.enums.YesNoOption;
-import org.example.InputDialog;
-import org.example.OutputDialog;
+import org.example.userwindows.InputDialog;
+import org.example.userwindows.OutputDialog;
 import org.example.question.*;
 
 import java.util.HashMap;
